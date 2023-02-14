@@ -16,7 +16,7 @@
             </div>
             <div id="chat_area">
                 <input type="text" maxlength="128" placeholder="送信メッセージを入力（Enterキーでも送信できます）" disabled>
-                <button disabled>送信</button>
+                <button onclick="sendMessage();" disabled>送信</button>
                 <div id="chat_message_area">
                     <div id="chat_message_body">
                     </div>
@@ -24,7 +24,7 @@
                 </div>
             </div>
         </div>
-        <p id="bluetooth_api_not_supported" class="error_message hidden">お使いのブラウザはBluetooth APIに対応していません。Google Chromeの場合は "<span class="copyable_text">chrome://flags/#enable-experimental-web-platform-features</span>" を検索バーに入力するとBluetooth APIを有効化出来る場合があります。</p>
+        <p id="bluetooth_api_not_supported" class="red_color hidden">お使いのブラウザはBluetooth APIに対応していません。Google Chromeの場合は "<span class="copyable_text">chrome://flags/#enable-experimental-web-platform-features</span>" を検索バーに入力するとBluetooth APIを有効化出来る場合があります。</p>
         <p id="balloon_text" class="hidden"></p>
     </body>
 </html>

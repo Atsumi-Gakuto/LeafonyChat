@@ -17,6 +17,12 @@ const READ_CHARACTERISTIC_UUID = "442f1571-8a00-9a28-cbe1-e1d4212d53eb";
 const WRITE_CHARACTERISTIC_UUID = "442f1572-8a00-9a28-cbe1-e1d4212d53eb";
 
 /**
+ * メッセージの種類
+ * @type {{[key: string]: number}}
+ */
+const MESSAGE_TYPE = {SEND: 0, RECEIVE: 1};
+
+/**
  * 書き込みのキャラクタリスティック
  * @type {BluetoothRemoteGATTCharacteristic|undefined}
  */
@@ -104,6 +110,36 @@ function onBluetoothDisconnectButtonClick() {
 function sendCommand(command) {
     if(WriteCharacteristic) WriteCharacteristic.writeValue(new TextEncoder().encode(command)).then(() => console.info("Bluetoothデバイスにメッセージを送信しました。"));
     else console.warn("Bluetoothデバイスに接続されていないため、メッセージを送信できませんでした。");
+}
+
+/**
+ * メッセージをメッセージリストに挿入する。
+ * @param {string} message 挿入するメッセージ
+ * @param {MESSAGE_TYPE} messageType メッセージの種類
+ */
+function insertChatMessage(message, messageType) {
+    const chatMessageBody = document.getElementById("chat_message_body");
+    const messageEntry = document.createElement("p");
+    switch(messageType) {
+        case MESSAGE_TYPE.SEND:
+            messageEntry.innerHTML = `<span class="red_color"><-</span> ${message}`;
+            break;
+        case MESSAGE_TYPE.RECEIVE:
+            messageEntry.innerHTML = `<span class="green_color">-></span> ${message}`;
+            break;
+    }
+    messageEntry.classList.add("chat_message", chatMessageBody.childElementCount % 2 == 0 ? "chat_message_primary" : "chat_message_secondary");
+    chatMessageBody.appendChild(messageEntry);
+}
+
+/**
+ * メッセージ送信処理
+ */
+function sendMessage() {
+    const messageBox = document.querySelector("#chat_area > input");
+    sendCommand(messageBox.value);
+    insertChatMessage(messageBox.value, MESSAGE_TYPE.SEND);
+    messageBox.value = "";
 }
 
 //WebがBluetooth APIに対応しているかどうか確認する。
