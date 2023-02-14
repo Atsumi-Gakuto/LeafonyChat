@@ -1,0 +1,39 @@
+.hidden {
+    display: none;
+}
+.error_message {
+    color: red;
+}
+.copyable_text {
+    cursor: pointer;
+}
+#balloon_text {
+    position: fixed;
+    width: fit-content;
+    padding: 5px;
+    color: white;
+    background-color: hsl(0deg, 0%, 25%);
+    border-radius: 10px;
+}
+#balloon_text::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -20px;
+    transform: rotate(90deg) translateY(25%);
+    border-style: solid;
+    border-color: transparent transparent transparent hsl(0deg, 0%, 25%);
+    border-width: 15px 0 15px 10px;
+}
+.balloon_text_green {
+    background-color: rgb(59, 165, 93) !important;
+}
+.balloon_text_green::after {
+    border-color: transparent transparent transparent rgb(59, 165, 93) !important;
+}
+.balloon_text_red {
+    background-color: hsl(0deg, 47%, 43%) !important;
+}
+.balloon_text_red::after {
+    border-color: transparent transparent transparent hsl(0deg, 47%, 43%) !important;
+}

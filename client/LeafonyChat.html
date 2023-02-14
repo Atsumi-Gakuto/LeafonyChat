@@ -3,9 +3,19 @@
     <head>
         <meta charset="utf-8">
         <title>Leafonyチャット</title>
+        <script src="LeafonyChat.js" defer></script>
+        <link rel="stylesheet" href="LeafonyChat.css">
     </head>
     <body>
         <h1>Leafonyチャット</h1>
         <p>LeafonyでBLEを用いてテキストを相互通信するアプリケーションです。</p>
+        <div id="bluetooth_area">
+            <div>
+                <button id="bluetooth_connect_button" onclick="onBluetoothConnectButtonClick();">Bluetooth接続</button>
+                <button id="bluetooth_disconnect_button" onclick="onBluetoothDisconnectButtonClick();" disabled>Bluetooth切断</button>
+            </div>
+        </div>
+        <p id="bluetooth_api_not_supported" class="error_message hidden">お使いのブラウザはBluetooth APIに対応していません。Google Chromeの場合は "<span class="copyable_text">chrome://flags/#enable-experimental-web-platform-features</span>" を検索バーに入力するとBluetooth APIを有効化出来る場合があります。</p>
+        <p id="balloon_text" class="hidden"></p>
     </body>
 </html>
