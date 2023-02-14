@@ -22,7 +22,7 @@ bool BLE_Connected = false; //BLEが接続されているかどうか。
 //シリアル文字入力
 bool Serial_Available_Previous = false; //前ループにシリアルで文字を受信したかどうか
 char Input_Message[128]; //受信した文字列のバッファ
-uint8 Input_Message_Pointer = 0; //メッセージのポインター
+uint8_t Input_Message_Pointer = 0; //メッセージのポインター
 
 //** グローバル関数 **
 void setup() {
@@ -47,6 +47,12 @@ void setup() {
     BLE.ble_cmd_le_gap_start_advertising(0, LE_GAP_USER_DATA, LE_GAP_UNDIRECTED_CONNECTABLE);
     BLE_Connected = false;
   };
+  //BLEから受信した時
+  BLE.ble_evt_gatt_server_attribute_value = [](const struct ble_msg_gatt_server_attribute_value_evt_t *message) {
+    Serial.print("-> ");
+    for(uint8_t i = 0; i < message -> value.len; i++) Serial.print((char)message -> value.data[i]);
+    Serial.println();
+  };
 
   //BLEのセットアップ
   Serial_BLE.begin(9600); //BLEシリアルの開始
@@ -64,8 +70,8 @@ void setup() {
 
   //======================
   //Advertisingデータの設定
-  uint8 advertising_data[31]; //Advertisingのデータ（最大31オクテット）
-	uint8 advertising_data_pointer = 0; //Advertisingのデータの格納場所を指し示す変数
+  uint8_t advertising_data[31]; //Advertisingのデータ（最大31オクテット）
+	uint8_t advertising_data_pointer = 0; //Advertisingのデータの格納場所を指し示す変数
 
 	//AD Structure 1（フラグ）
 	advertising_data[advertising_data_pointer++] = 0x02; //フィールドの長さ
@@ -93,7 +99,12 @@ void loop() {
     Serial_Available_Previous = true;
   }
   else if(Serial_Available_Previous) {
-    if(BLE_Connected) BLE.ble_cmd_gatt_server_send_characteristic_notification(1, 0x000C, Input_Message_Pointer - 1, (const uint8 *)Input_Message);
+    if(BLE_Connected) {
+      BLE.ble_cmd_gatt_server_send_characteristic_notification(1, 0x000C, Input_Message_Pointer - 1, (const uint8_t *)Input_Message); //BLE接続されている場合はBLE送信
+      Serial.print("<- ");
+      for(uint8_t i = 0; i < Input_Message_Pointer - 1; i++) Serial.print(Input_Message[i]);
+      Serial.println();
+    }
     Serial_Available_Previous = false;
     Input_Message_Pointer = 0;
   }
