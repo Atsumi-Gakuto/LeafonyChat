@@ -64,8 +64,8 @@ function onBluetoothConnectButtonClick() {
                 console.info("プライマリサービスに接続しました。");
                 //読み取りのキャラクタリスティック
                 service.getCharacteristic(READ_CHARACTERISTIC_UUID).then((characteristic) => {
-                    //TODO
-                    characteristic.addEventListener("characteristicvaluechanged", () => {
+                    characteristic.addEventListener("characteristicvaluechanged", (event) => {
+                        insertChatMessage(new TextDecoder("utf-8").decode(event.target.value), MESSAGE_TYPE.RECEIVE);
                         console.info("キャラクタリスティックが変化しました。");
                     });
                     characteristic.startNotifications();

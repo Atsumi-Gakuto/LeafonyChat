@@ -30,6 +30,7 @@ div {
     width: 100%;
     height: 100%;
     border: solid 1px silver;
+    overflow-y: scroll;
 }
 .chat_message {
     margin: 0;
