@@ -15,7 +15,7 @@
                 <button id="bluetooth_disconnect_button" onclick="onBluetoothDisconnectButtonClick();" disabled>Bluetooth切断</button>
             </div>
             <div id="chat_area">
-                <input type="text" maxlength="128" placeholder="送信メッセージを入力（Enterキーでも送信できます）" disabled>
+                <input type="text" maxlength="128" placeholder="送信メッセージを入力（Enterキーでも送信できます）" onkeypress="onKeypressInMessageInput(event);" disabled>
                 <button onclick="sendMessage();" disabled>送信</button>
                 <div id="chat_message_area">
                     <div id="chat_message_body">

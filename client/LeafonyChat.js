@@ -104,6 +104,13 @@ function onBluetoothDisconnectButtonClick() {
 }
 
 /**
+ * メッセージ入力のテキストボックスでキーが押された時の処理
+ */
+function onKeypressInMessageInput(event) {
+    if(event.keyCode == 13) sendMessage();
+}
+
+/**
  * Leafonyにコマンドを送信する。
  * @param {string} command 送信する文字列
  */
