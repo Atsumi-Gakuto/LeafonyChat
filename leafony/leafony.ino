@@ -19,6 +19,11 @@ SoftwareSerial Serial_BLE(BLE_RX, BLE_TX);
 BGLib BLE((HardwareSerial *)&Serial_BLE, 0, 0);
 bool BLE_Connected = false; //BLEが接続されているかどうか。
 
+//シリアル文字入力
+bool Serial_Available_Previous = false; //前ループにシリアルで文字を受信したかどうか
+char Input_Message[128]; //受信した文字列のバッファ
+uint8 Input_Message_Pointer = 0; //メッセージのポインター
+
 //** グローバル関数 **
 void setup() {
   Serial.begin(9600); //シリアル通信の開始
@@ -83,6 +88,15 @@ void setup() {
 }
 
 void loop() {
-  if(Serial.available() > 0) Serial.write(Serial.read());
+  if(Serial.available() > 0) {
+    Input_Message[Input_Message_Pointer++] = Serial.read();
+    Serial_Available_Previous = true;
+  }
+  else if(Serial_Available_Previous) {
+    if(BLE_Connected) BLE.ble_cmd_gatt_server_send_characteristic_notification(1, 0x000C, Input_Message_Pointer - 1, (const uint8 *)Input_Message);
+    Serial_Available_Previous = false;
+    Input_Message_Pointer = 0;
+  }
   BLE.checkActivity(0); //BLEの状態の確認
+  delay(10);
 }
