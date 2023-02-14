@@ -1,5 +1,36 @@
+html {
+    height: calc(100% - 40px);
+}
+body {
+    height: 100%;
+}
+div {
+    margin: 10px 0;
+}
 .hidden {
     display: none;
+}
+#bluetooth_area {
+    height: calc(100% - 200px);
+}
+#chat_area {
+    width: 100%;
+    height: 100%;
+}
+#chat_area > input {
+    width: calc(100% - 57px);
+}
+#chat_message_area {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    height: 100%;
+}
+#chat_message_body {
+    width: 100%;
+    height: 100%;
+    border: solid 1px silver;
+    border-radius: 5px;
 }
 .error_message {
     color: red;

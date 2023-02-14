@@ -46,7 +46,8 @@ function onBluetoothConnectButtonClick() {
         console.debug(`ID: ${device.id}`);
         console.groupEnd();
         device.addEventListener("gattserverdisconnected", () => {
-            //TODO
+            document.querySelector("#chat_area > input").disabled = true;
+            document.querySelector("#chat_area > button").disabled = true;
             console.info("Bluetoothデバイスから切断されました。");
         }, {once: true});
         //GATTサーバに接続する。
@@ -64,7 +65,11 @@ function onBluetoothConnectButtonClick() {
                     characteristic.startNotifications();
                 });
                 //書き込みのキャラクタリスティック
-                service.getCharacteristic(WRITE_CHARACTERISTIC_UUID).then((characteristic) => WriteCharacteristic = characteristic);
+                service.getCharacteristic(WRITE_CHARACTERISTIC_UUID).then((characteristic) => {
+                    document.querySelector("#chat_area > input").disabled = false;
+                    document.querySelector("#chat_area > button").disabled = false;
+                    WriteCharacteristic = characteristic;
+                });
             });
         });
     }).catch((error) => {

@@ -14,6 +14,15 @@
                 <button id="bluetooth_connect_button" onclick="onBluetoothConnectButtonClick();">Bluetooth接続</button>
                 <button id="bluetooth_disconnect_button" onclick="onBluetoothDisconnectButtonClick();" disabled>Bluetooth切断</button>
             </div>
+            <div id="chat_area">
+                <input type="text" maxlength="128" placeholder="送信メッセージを入力（Enterキーでも送信できます）" disabled>
+                <button disabled>送信</button>
+                <div id="chat_message_area">
+                    <div id="chat_message_body">
+                    </div>
+                    <button>クリア</button>
+                </div>
+            </div>
         </div>
         <p id="bluetooth_api_not_supported" class="error_message hidden">お使いのブラウザはBluetooth APIに対応していません。Google Chromeの場合は "<span class="copyable_text">chrome://flags/#enable-experimental-web-platform-features</span>" を検索バーに入力するとBluetooth APIを有効化出来る場合があります。</p>
         <p id="balloon_text" class="hidden"></p>
