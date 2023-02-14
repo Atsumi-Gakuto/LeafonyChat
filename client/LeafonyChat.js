@@ -111,6 +111,14 @@ function onKeypressInMessageInput(event) {
 }
 
 /**
+ * 「クリア」ボタンをクリックした時の処理
+ */
+function onClearButtonClick() {
+    const chatMessageBody = document.getElementById("chat_message_body");
+    while(chatMessageBody.firstElementChild) chatMessageBody.removeChild(chatMessageBody.firstElementChild);
+}
+
+/**
  * Leafonyにコマンドを送信する。
  * @param {string} command 送信する文字列
  */
